@@ -8,14 +8,12 @@ cookbook 'apt'
 cookbook 'nginx'
 cookbook 'postgresql'
 # cookbook 'git'
-# cookbook 'rvm', :git => 'git://github.com/fnichol/chef-rvm.git', :ref => 'v0.9.0'
 
 # cookbook 'chef-client'
 
 # cookbook 'apache2', '>= 1.0.0'
-
-# cookbook 'rvm',
-#   :git => 'https://github.com/fnichol/chef-rvm'
+cookbook 'rvm'
+  # :git => 'https://github.com/fnichol/chef-rvm'
 
 # cookbook 'postgresql',
 #   :git => 'https://github.com/findsyou/cookbooks',

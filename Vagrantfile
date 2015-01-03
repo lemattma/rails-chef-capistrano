@@ -43,13 +43,13 @@ Vagrant.configure(2) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    # vb.gui = true
+  
+    # Customize the amount of memory on the VM:
+    vb.memory = "2048"
+  end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
@@ -68,14 +68,35 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get install apache2
   # SHELL
   config.vm.provision "chef_solo" do |chef|
-    # chef.cookbooks_path = "cookbooks"
+    chef.json = {
+      "rvm" => {
+        "user_installs" => [
+          { 
+            'user'            => 'vagrant',
+            'rubies'          => ['2.2.0'],
+            'default_ruby'    => '2.2.0',
+            'upgrade'         => "stable",
+            'rvm_gem_options' => "",
+            'global_gems'     => [
+              { 'name'    => 'bundler' }
+            ]
+          }
+        ]
+      }
+    }
+
+    chef.cookbooks_path = ["cookbooks", "site-cookbooks"]
     chef.add_recipe "apt"
-    # chef.add_recipe "build-essential"
+    chef.add_recipe "build-essential"
     chef.add_recipe "nginx"
     chef.add_recipe "postgresql"
 
-    # chef.cookbooks_path = "chef/cookbooks"
-    # chef.add_recipe "apache"
+    # execute "Adding gpg key" do
+    #   command "gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3"
+    #   only_if 'which gpg'
+    # end
+    chef.add_recipe "rvm::user"
+
   end
 
 end
