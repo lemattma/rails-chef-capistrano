@@ -17,4 +17,8 @@
 
 # Vagrant
 .vagrant
-/cookbooks
+/chef/cookbooks
+/chef/tmp
+
+# Other files
+.DS_Store

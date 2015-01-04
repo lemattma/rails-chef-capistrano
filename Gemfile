@@ -38,5 +38,5 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-# gem 'knife-solo'
-gem 'librarian'
+gem 'knife-solo'
+gem 'librarian-chef'
