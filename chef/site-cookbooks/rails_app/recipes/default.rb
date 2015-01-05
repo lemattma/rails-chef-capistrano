@@ -10,7 +10,6 @@
 include_recipe 'apt'    # ensure the local APT package cache is up to date
 include_recipe 'nginx'
 include_recipe 'git'
-# include_recipe 'postgresql'
 
 
 # Create user 
@@ -22,6 +21,12 @@ user node[:user][:name] do
   supports manage_home: true
   shell "/bin/bash"
 end
+
+
+# Postgresql
+# **************************************************************************************
+include_recipe 'postgresql::server'
+include_recipe 'postgresql::client'
 
 
 # PGP fix for RVM install

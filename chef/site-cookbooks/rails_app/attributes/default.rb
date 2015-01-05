@@ -19,3 +19,8 @@ node.set[:rvm][:installs] = {
 node.set[:rvm][:user_installs] = [
   {user: node[:user][:name]}
 ]
+
+# Postgresql config
+# **************************************************************************************
+node.set[:postgresql][:assign_postgres_password] = false
+node.set[:postgresql][:password][:postgres] = "md54ad0c5914ca3273e5159c4218f033f20"
