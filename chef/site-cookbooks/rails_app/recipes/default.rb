@@ -57,18 +57,15 @@ postgresql_database_user node[:user][:db_user] do
   action        :grant
 end
 
+
 # PGP fix for RVM install
 # **************************************************************************************
-gnupg_dir       = "/home/#{node[:user][:name]}/.gnupg"
-gnupg_dir_user  = "chown -R #{node[:user][:name]}:#{node[:user][:group]} #{gnupg_dir};"
-gnupg_dir_root  = "if [ -d #{gnupg_dir} ]; then chown -R root:root #{gnupg_dir}; fi;"
-gnupg_cmd       = "`which gpg2 || which gpg` --keyserver hkp://keys.gnupg.net --recv-keys #{node['rvm']['gpg_key']};"
-
 execute "Adding gpg key to #{node[:user][:name]}" do
   environment ({"HOME" => "/home/#{node[:user][:name]}"})
-  command "#{gnupg_dir_root} #{gnupg_cmd} #{gnupg_dir_user}"
+  command "`which gpg2 || which gpg` --keyserver hkp://keys.gnupg.net --recv-keys #{node['rvm']['gpg_key']};"
+  user node[:user][:name]
+  group node[:user][:group]
   not_if { node['rvm']['gpg_key'].empty? }
-  returns 0
 end
 
 
