@@ -14,6 +14,11 @@ default[:user][:db_pass]  		    = "dev123"
 default[:user][:postgres_pass]  	= "dev123"
 
 
+# Build essential compile time
+# **************************************************************************************
+node.set['build-essential']['compile_time'] = true
+
+
 # RVM config
 # **************************************************************************************
 node.set[:rvm][:user_rubies] 			= ['2.2.0']

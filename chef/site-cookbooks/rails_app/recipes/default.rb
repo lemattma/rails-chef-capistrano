@@ -8,6 +8,7 @@
 #
 
 include_recipe 'apt'    # ensure the local APT package cache is up to date
+include_recipe "build-essential"
 include_recipe 'nginx'
 include_recipe 'git'
 
