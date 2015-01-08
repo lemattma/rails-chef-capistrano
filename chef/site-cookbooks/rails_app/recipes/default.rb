@@ -26,8 +26,35 @@ end
 # Postgresql
 # **************************************************************************************
 include_recipe 'postgresql::server'
-include_recipe 'postgresql::client'
+include_recipe 'postgresql::ruby'
 
+postgresql_connection_info = {
+  :host => "localhost",
+  :port => node['postgresql']['config']['port'],
+  :username => 'postgres',
+  :password => node[:user][:postgres_pass]
+}
+
+# Create app user
+postgresql_database_user node[:user][:db_user] do
+  connection postgresql_connection_info
+  password node[:user][:db_pass]
+  action :create
+end
+
+# Create app DB
+postgresql_database node[:user][:db_name] do
+  connection postgresql_connection_info
+  action :create
+end
+
+# Grant permissions to DB
+postgresql_database_user node[:user][:db_user] do
+  connection    postgresql_connection_info
+  database_name node[:user][:db_name]
+  privileges    [:all]
+  action        :grant
+end
 
 # PGP fix for RVM install
 # **************************************************************************************
